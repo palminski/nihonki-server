@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\API\AiTranslationController;
+use App\Http\Controllers\API\AiTranslationController as APIAiTranslationController;
 
 
 Route::prefix('/ai_translation')->group(function () {
