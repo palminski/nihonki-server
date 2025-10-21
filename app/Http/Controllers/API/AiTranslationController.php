@@ -40,7 +40,7 @@ class AiTranslationController extends Controller
     {
         try {
             $wordToTranslate = $request->input("wordToTranslate");
-            $key = $request->input('apiKey') ?? env('OPENAI_API_KEY');
+            $key = env('OPENAI_API_KEY');
             
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
@@ -73,7 +73,7 @@ class AiTranslationController extends Controller
     {
         try {
             $base64 = $request->input("imageBase64");
-            $key = $request->input('apiKey') ?? env('OPENAI_API_KEY');
+            $key = env('OPENAI_API_KEY');
 
 
             if (str_starts_with($base64, 'data:image')) {
