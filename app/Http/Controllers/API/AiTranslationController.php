@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Services\ClubService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use OpenAI;
 
@@ -39,9 +41,26 @@ class AiTranslationController extends Controller
     public function translateWord(Request $request)
     {
         try {
+            $appUserId = $request->input("appUserId");
             $wordToTranslate = $request->input("wordToTranslate");
+
+            //Check if user subscribed
+            $cacheKey = "revcat_{$appUserId}";
+            $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
+                $subValidRequest = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
+                ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
+                if ($subValidRequest->failed()) {
+                    throw new \Exception('Failed To Fetch Subscription Data');
+                }
+                return $subValidRequest->json();
+            });
+            $entitlement = $subData["subscriber"]["entitlements"]["api_key_access"] ?? null;
+            if (!$entitlement || strtotime($entitlement["expires_date"]) < time()) {
+                return response()->json(['valid' => false, 'reason' => 'User does not have required entitlement'], 403);
+            }
+
             $key = env('OPENAI_API_KEY');
-            
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
                 'model' => 'gpt-4.1-mini',
@@ -72,14 +91,31 @@ class AiTranslationController extends Controller
     public function translateImage(Request $request)
     {
         try {
+            $appUserId = $request->input("appUserId");
             $base64 = $request->input("imageBase64");
-            $key = env('OPENAI_API_KEY');
 
+            //Check if user subscribed
+            $cacheKey = "revcat_{$appUserId}";
+            $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
+                $subValidRequest = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
+                ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
+                if ($subValidRequest->failed()) {
+                    throw new \Exception('Failed To Fetch Subscription Data');
+                }
+                return $subValidRequest->json();
+            });
+            $entitlement = $subData["subscriber"]["entitlements"]["api_key_access"] ?? null;
+            if (!$entitlement || strtotime($entitlement["expires_date"]) < time()) {
+                return response()->json(['valid' => false, 'reason' => 'User does not have required entitlement'], 403);
+            }
+
+            $key = env('OPENAI_API_KEY');
 
             if (str_starts_with($base64, 'data:image')) {
                 $base64 = substr($base64, strpos($base64, ',') + 1);
             }
-                        
+
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
                 'model' => 'gpt-4.1-mini',
