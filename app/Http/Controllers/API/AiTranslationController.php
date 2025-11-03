@@ -12,6 +12,8 @@ use App\Services\ClubService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Device;
+use App\Services\DeviceService;
 use OpenAI;
 
 use function PHPSTORM_META\type;
@@ -44,6 +46,9 @@ class AiTranslationController extends Controller
             $appUserId = $request->input("appUserId");
             $wordToTranslate = $request->input("wordToTranslate");
 
+            $deviceService = new DeviceService();
+            $device = $deviceService->accessOrCreateDeviceFromId($appUserId);
+
             //Check if user subscribed
             $cacheKey = "revcat_{$appUserId}";
             $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
@@ -55,8 +60,11 @@ class AiTranslationController extends Controller
                 }
                 return $subValidRequest->json();
             });
+
             $entitlement = $subData["subscriber"]["entitlements"]["api_key_access"] ?? null;
-            if (!$entitlement || strtotime($entitlement["expires_date"]) < time()) {
+            if ($device->words_remaining <= 0 && (!$entitlement || strtotime($entitlement["expires_date"]) < time())) {
+                Cache::forget($cacheKey);
+                Log::alert($entitlement);
                 return response()->json(['valid' => false, 'reason' => 'User does not have required entitlement'], 403);
             }
 
@@ -70,6 +78,8 @@ class AiTranslationController extends Controller
                     ["role" => "user", "content" => $wordToTranslate],
                 ],
             ]);
+
+            $deviceService->decrementWordUsages($device);
 
             return response()->json(
                 [
@@ -94,6 +104,9 @@ class AiTranslationController extends Controller
             $appUserId = $request->input("appUserId");
             $base64 = $request->input("imageBase64");
 
+            $deviceService = new DeviceService();
+            $device = $deviceService->accessOrCreateDeviceFromId($appUserId);
+
             //Check if user subscribed
             $cacheKey = "revcat_{$appUserId}";
             $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
@@ -105,8 +118,10 @@ class AiTranslationController extends Controller
                 }
                 return $subValidRequest->json();
             });
+
             $entitlement = $subData["subscriber"]["entitlements"]["api_key_access"] ?? null;
-            if (!$entitlement || strtotime($entitlement["expires_date"]) < time()) {
+            if ($device->images_remaining <= 0 && (!$entitlement || strtotime($entitlement["expires_date"]) < time())) {
+                Cache::forget($cacheKey);
                 return response()->json(['valid' => false, 'reason' => 'User does not have required entitlement'], 403);
             }
 
@@ -125,6 +140,9 @@ class AiTranslationController extends Controller
                     ["role" => "user", "content" => [['type' => "input_image", 'image_url' => "data:image/jpeg;base64,{$base64}"]]],
                 ],
             ]);
+
+            $deviceService->decrementImageUsages($device);
+
             return response()->json(
                 [
                     'message' => ($response->outputText),
