@@ -42,8 +42,13 @@ class DeviceController extends Controller
                 'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
             ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
             if ($subValidRequest->failed()) {
-                Log::info($appUserId);
-                Log::info(env('REVENUECAT_API_KEY'));
+                if ($appUserId == null) {
+                    Log::info("App User ID was null");
+                }
+
+                if (env('REVENUECAT_API_KEY') == null) {
+                    Log::info("Rev Cat API Key is Null");
+                }
                 throw new \Exception('Failed To Fetch Subscription Data');
             }
             return $subValidRequest->json();
@@ -53,11 +58,6 @@ class DeviceController extends Controller
         if (!$entitlement || strtotime($entitlement["expires_date"]) < time()) {
             $userSubscribed = false;
         }
-        Log::alert([
-            'images_remaining' => $imagesRemaining,
-            'words_remaining' => $wordsRemaining,
-            'is_subscribed' => $userSubscribed,
-        ]);
 
         return response()->json([
             'images_remaining' => $imagesRemaining,
