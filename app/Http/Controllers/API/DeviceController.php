@@ -42,6 +42,8 @@ class DeviceController extends Controller
                 'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
             ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
             if ($subValidRequest->failed()) {
+                Log::info($appUserId);
+                Log::info(env('REVENUECAT_API_KEY'));
                 throw new \Exception('Failed To Fetch Subscription Data');
             }
             return $subValidRequest->json();
