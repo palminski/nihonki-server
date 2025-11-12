@@ -39,14 +39,14 @@ class DeviceController extends Controller
         $cacheKey = "revcat_{$appUserId}";
         $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
             $subValidRequest = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
+                'Authorization' => 'Bearer ' . config('services.revenuecat.key'),
             ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
             if ($subValidRequest->failed()) {
                 if ($appUserId == null) {
                     Log::info("App User ID was null");
                 }
 
-                if (env('REVENUECAT_API_KEY') == null) {
+                if (config('services.revenuecat.key') == null) {
                     Log::info("Rev Cat API Key is Null");
                 }
                 throw new \Exception('Failed To Fetch Subscription Data');

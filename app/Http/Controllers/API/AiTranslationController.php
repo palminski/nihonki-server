@@ -53,7 +53,7 @@ class AiTranslationController extends Controller
             $cacheKey = "revcat_{$appUserId}";
             $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
                 $subValidRequest = Http::withHeaders([
-                    'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
+                    'Authorization' => 'Bearer ' . config('services.revenuecat.key'),
                 ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
                 if ($subValidRequest->failed()) {
                     throw new \Exception('Failed To Fetch Subscription Data');
@@ -68,7 +68,7 @@ class AiTranslationController extends Controller
                 return response()->json(['valid' => false, 'reason' => 'User does not have required entitlement'], 403);
             }
 
-            $key = env('OPENAI_API_KEY');
+            $key = config('services.openai.key');
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
                 'model' => 'gpt-4.1-mini',
@@ -111,7 +111,7 @@ class AiTranslationController extends Controller
             $cacheKey = "revcat_{$appUserId}";
             $subData = Cache::remember($cacheKey, now()->addMinutes(3), function () use ($appUserId) {
                 $subValidRequest = Http::withHeaders([
-                    'Authorization' => 'Bearer ' . env('REVENUECAT_API_KEY'),
+                    'Authorization' => 'Bearer ' . config('services.revenuecat.key'),
                 ])->get("https://api.revenuecat.com/v1/subscribers/{$appUserId}");
                 if ($subValidRequest->failed()) {
                     throw new \Exception('Failed To Fetch Subscription Data');
@@ -125,7 +125,8 @@ class AiTranslationController extends Controller
                 return response()->json(['valid' => false, 'reason' => 'User does not have required entitlement'], 403);
             }
 
-            $key = env('OPENAI_API_KEY');
+            $key = config('services.openai.key');
+
 
             if (str_starts_with($base64, 'data:image')) {
                 $base64 = substr($base64, strpos($base64, ',') + 1);
