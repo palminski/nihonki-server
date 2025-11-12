@@ -12,7 +12,7 @@
             <h1 class="font-light tracking-[10px] text-2xl lg:text-4xl uppercase  border-b-[0.5px] mb-4 pb-2">Intro <span
                     class="text-sm lg:text-xl">- 自己紹介</span> </h1>
             <p class="font-light lg:text-lg mb-4 ">Hello! I am the developer working on the Umeboshi app! I started studying
-                Japanese when I was in highschool and continued to do so all thoughout college. Despite taking Japanese
+                Japanese when I was in high school and continued to do so all thoughout college. Despite taking Japanese
                 classes for such a long period of time I found that post graduation I was still frustratingly unable to
                 really do much with the language other than string together basic sentances
                 ( 僕の名前はウィルです。日本語を勉強している。よろしくお願いします。). I don't at all blame this on my teachers, as it is a hard language to
