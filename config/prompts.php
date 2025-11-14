@@ -28,6 +28,8 @@ General Formatting Rules:
 ---
 
 Stylistic & Context Rules:
+- If the provided word is slang, casual, or affectionate (e.g. ワンコ, おにいちゃん, バカっぽい), DO NOT replace it with a more standard or dictionary form.
+- Always treat the given surface form as its own entry. Preserve its nuance (casual, affectionate, childish, etc.) in meaning and example sentences.
 - Example sentences must sound natural and provide clear contextual meaning for the word.
   - The exampleSentenceKanji field itself should not contain furigana.
   - Avoid sentences that merely repeat the word in isolation or describe its definition.
@@ -113,6 +115,8 @@ Return ONLY one valid JSON object with the following fields:
 - exampleSentenceEnglish
 
 Rules:
+- If the provided word is slang, casual, or affectionate (e.g. ワンコ, おにいちゃん, バカっぽい), DO NOT replace it with a more standard or dictionary form.
+- Always treat the given surface form as its own entry. Preserve its nuance (casual, affectionate, childish, etc.) in meaning and example sentences.
 - Sentences must be original and show natural, real-world usage.
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - Ensure proper <b> wrapping and furigana formatting.
@@ -154,10 +158,13 @@ Each object must include:
 ---
 
 Rules for extraction:
-- If an image contains no vocabulary return an empty array. Images of physical objects need not be translated.
+- Always attempt to read and interpret all visible Japanese text, regardless of whether the image also contains objects, characters, or scenery.
+- Do NOT skip text that appears on signs, manga panels, UI screens, or stylized graphics — as long as it contains Japanese words, extract them.
+- Only return an empty array if there is truly **no readable Japanese text** anywhere in the image.
 - Identify all distinct, meaningful words — do not skip short but common words (like nouns, adjectives, verbs, and common adverbs).
 - Do NOT use the text in the image itself as the example sentence unless it is a full, contextual sentence.
 - Example sentences must always provide meaningful context and natural usage (avoid single-word utterances or manga quotes).
+- If OCR confidence is low, make a best guess of the text before translation rather than returning nothing.
 
 Output format: [ {...}, {...}, {...} ]
 EOT
