@@ -86,32 +86,43 @@
         </section>
 
         <section class="my-2 shadow-lg shadow-purple-800/50 border border-purple-500 p-6 bg-purple-950 text-white  rounded">
-            <h1 class="font-light tracking-[10px] text-2xl lg:text-4xl uppercase  border-b-[0.5px] mb-2 pb-2">Contact <span
-                    class="text-sm lg:text-xl">- お問い合わせ </span></h1>
-            <form class="flex flex-col space-y-2 lg:w-1/2" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="1dfd7f4d-6403-408e-ab68-b4d36126c2d7">
-                <div class="mb-4">
-                    <label class="block" for="name">Name: </label>
-                    <input id="name"
-                        class="bg-white w-full border-black text-black placeholder:text-purple-400 p-1 pl-2"
-                        placeholder="Your name..." type="text" name="name" required>
+            <h1 class="font-light tracking-[10px] text-lg lg:text-4xl uppercase  border-b-[0.5px] mb-2 pb-2">Contact
+                <span class="hidden lg:block text-sm lg:text-xl ">- お問い合わせ </span>
+                <span class="lg:hidden text-xs lg:text-xl ">- お問い合わせ </span>
+            </h1>
+            <form class="lg:flex justify-evenly items-center" action="https://api.web3forms.com/submit" method="POST">
+                <div class="flex flex-col space-y-2 lg:w-1/2">
+                    <input type="hidden" name="access_key" value="1dfd7f4d-6403-408e-ab68-b4d36126c2d7">
+                    <div class="mb-4">
+                        <label class="block" for="name">Name: </label>
+                        <input id="name"
+                            class="bg-white w-full border-black text-black placeholder:text-purple-400 p-1 pl-2"
+                            placeholder="Your name..." type="text" name="name" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block" for="email">Email: </label>
+                        <input id="email"
+                            class="bg-white w-full border-black text-black placeholder:text-purple-400 p-1 pl-2"
+                            placeholder="Your email..." type="email" name="email" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block" for="message">Message: </label>
+                        <textarea id="message" class="bg-white w-full border-black text-black placeholder:text-purple-400 p-1 pl-2"
+                            placeholder="Message" name="message" required>I am interested in beta testing Umeboshi!</textarea>
+                    </div>
+                    <div>
+
+                        <button class="bg-purple-600 p-2 px-4 cursor-pointer mt-2" type="submit">Submit</button>
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label class="block" for="email">Email: </label>
-                    <input id="email"
-                        class="bg-white w-full border-black text-black placeholder:text-purple-400 p-1 pl-2"
-                        placeholder="Your email..." type="email" name="email" required>
-                </div>
-                <div class="mb-4">
-                    <label class="block" for="message">Message: </label>
-                    <textarea id="message" class="bg-white w-full border-black text-black placeholder:text-purple-400 p-1 pl-2"
-                        placeholder="Message" name="message" required>I am interested in beta testing Umeboshi!</textarea>
+                <div class="lg:w-1/2 pt-6 lg:pt-2 flex justify-center">
+                    <img class="lg:w-1/2" src="{{ asset('images/UmeboshiChan.svg') }}" alt="Umeboshi Chan">
+
                 </div>
 
-                <div>
 
-                    <button class="bg-purple-600 p-2 px-4 cursor-pointer mt-2" type="submit">Submit</button>
-                </div>
+
+
             </form>
         </section>
     </section>
