@@ -86,8 +86,7 @@
         </section>
 
         <section class="my-2 shadow-lg shadow-purple-800/50 border border-purple-500 p-6 bg-purple-950 text-white  rounded">
-            <h1 class="font-light tracking-[10px] text-lg lg:text-4xl uppercase  border-b-[0.5px] mb-2 pb-2">Contact
-                <span class="hidden lg:block text-sm lg:text-xl ">- お問い合わせ </span>
+            <h1 class="font-light tracking-[10px] text-lg lg:text-4xl uppercase  border-b-[0.5px] mb-2 pb-2">Contact <span class="hidden lg:block text-sm lg:text-xl ">- お問い合わせ </span>
                 <span class="lg:hidden text-xs lg:text-xl ">- お問い合わせ </span>
             </h1>
             <form class="lg:flex justify-evenly items-center" action="https://api.web3forms.com/submit" method="POST">
