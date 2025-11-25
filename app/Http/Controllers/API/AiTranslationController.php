@@ -71,7 +71,8 @@ class AiTranslationController extends Controller
             $key = config('services.openai.key');
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
-                'model' => 'gpt-4.1-mini',
+                'model' => 'gpt-4o-mini',
+                'temperature' => 0.3,
                 'input' => [
                     ["role" => "system", "content" => config("prompts.system_instructions")],
                     ["role" => "system", "content" => config("prompts.single_word_instructions")],
@@ -134,7 +135,8 @@ class AiTranslationController extends Controller
 
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
-                'model' => 'gpt-4.1-mini',
+                'model' => 'gpt-4o-mini',
+                'temperature' => 0.3,
                 'input' => [
                     ["role" => "system", "content" => config("prompts.system_instructions")],
                     ["role" => "system", "content" => config("prompts.image_scan_instructions")],

@@ -13,8 +13,8 @@ class DeviceService
         if ($device == null) {
             $device = new Device();
             $device->device_id = $deviceId;
-            $device->words_remaining = 5;
-            $device->images_remaining = 3;
+            $device->words_remaining = 25;
+            $device->images_remaining = 25;
             $device->save();
         }
         return $device;
