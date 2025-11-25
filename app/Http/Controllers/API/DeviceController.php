@@ -26,8 +26,8 @@ class DeviceController extends Controller
         if ($device == null) {
             $device = new Device();
             $device->device_id = $appUserId;
-            $device->words_remaining = 5;
-            $device->images_remaining = 3;
+            $device->words_remaining = 25;
+            $device->images_remaining = 25;
             $device->save();
         }
         $imagesRemaining = $device->images_remaining;
