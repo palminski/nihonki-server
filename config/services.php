@@ -21,6 +21,10 @@ return [
         'key' => env('REVENUECAT_API_KEY'),
     ],
 
+    'wayne' => [
+        'secret' => env('WAYNES_SECRET_CODE'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
