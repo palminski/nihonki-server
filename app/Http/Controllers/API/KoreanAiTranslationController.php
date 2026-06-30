@@ -11,6 +11,7 @@ class KoreanAiTranslationController extends Controller
 {
     public function translateWord(Request $request)
     {
+        Log::alert("KOREAN HIT");
         try {
             $wordToTranslate = $request->input("wordToTranslate");
             
