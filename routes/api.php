@@ -5,17 +5,25 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\AiTranslationController as APIAiTranslationController;
 use App\Http\Controllers\API\FrenchAiTranslationController as APIFrenchAiTranslationController;
+use App\Http\Controllers\API\KoreanAiTranslationController as APIKoreanAiTranslationController;
 use App\Http\Controllers\API\DeviceController as APIDeviceController;
 
 Route::prefix('/devices')->group(function () {
     Route::post('/info', [APIDeviceController::class, 'info']);
 });
 
+// Japanese
 Route::prefix('/ai_translation')->group(function () {
     Route::post('/single_word', [APIAiTranslationController::class, 'translateWord']);
     Route::post('/image', [APIAiTranslationController::class, 'translateImage']);
 });
 
+// Korean
+Route::prefix('/korean_ai_translation')->group(function () {
+    Route::post('/single_word', [APIFrenchAiTranslationController::class, 'translateWord']);
+});
+
+// French
 Route::prefix('/french_ai_translation')->group(function () {
     Route::post('/single_word', [APIFrenchAiTranslationController::class, 'translateWord']);
 });

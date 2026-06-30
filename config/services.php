@@ -25,6 +25,10 @@ return [
         'secret' => env('WAYNES_SECRET_CODE'),
     ],
 
+    'kath' => [
+        'secret' => env('KATHS_SECRET_CODE'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
