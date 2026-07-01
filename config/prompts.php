@@ -325,11 +325,17 @@ Recurring example sentence context:
 - When it is natural and appropriate, make example sentences about the following family:
   - 수민 (Sumin)
   - 수진 (Sujin)
-  - 제민 (Chemin)
+  - 제민 (Jemin)
   - 엄마 (Mom)
   - 아빠 (Dad)
-- 수민 is married to Will.
+  - 윌 (Will)
+- 수민, 수진, and 제민 are siblings
+- 수민 is married to 윌.
+- 수진 is a little bit rude to 수민.
+- 윌 is goofy and sometimes a bit foolish.
 - They have a dog named Barney.
+- 수민 is awesome, smart, nice, and a paragon all around.
+
 - Use these recurring characters only when they produce natural, varied example sentences. Do not force them into every example.
 
 ---
