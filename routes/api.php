@@ -20,7 +20,7 @@ Route::prefix('/ai_translation')->group(function () {
 
 // Korean
 Route::prefix('/korean_ai_translation')->group(function () {
-    Route::post('/single_word', [APIFrenchAiTranslationController::class, 'translateWord']);
+    Route::post('/single_word', [APIKoreanAiTranslationController::class, 'translateWord']);
 });
 
 // French
