@@ -445,6 +445,7 @@ Required Output Fields:
 - If the provided word is slang, casual, or affectionate, DO NOT replace it with a more standard or dictionary form.
 - Always treat the given surface form as its own entry. Preserve its nuance (casual, affectionate, childish, etc.) in meaning and example sentences.
 - Prefer the most natural English gloss a learner would expect.
+- Meaning refers to the translation of the word into english. Do not provide a definition for the word in this field in {{LANGUAGE}}.
 - The exampleSentence must be written entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
 - Avoid vulgar/slang meanings unless explicitly requested.
 - Example sentences must be appropriate for general learners (no sexual or offensive content).
