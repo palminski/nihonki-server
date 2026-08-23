@@ -34,6 +34,9 @@ Route::prefix('/french_ai_translation')->group(function () {
 // shared prompt template so the same endpoint/schema works for any language.
 Route::prefix('/v2/ai_translation')->group(function () {
     Route::post('/single_word', [APIV2AiTranslationController::class, 'translateWord']);
+    // For languages needing a pronunciation aid (Mandarin, Cantonese) — client also sends
+    // `romanizationSystem` (e.g. "Hanyu Pinyin", "Jyutping").
+    Route::post('/single_word_romanized', [APIV2AiTranslationController::class, 'translateWordRomanized']);
 });
 
 // For Testing ----------------------------------------------
