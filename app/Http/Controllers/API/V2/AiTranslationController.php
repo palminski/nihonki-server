@@ -35,6 +35,37 @@ class AiTranslationController extends Controller
         return null;
     }
 
+    // German nouns carry grammatical gender that isn't visible from the word alone —
+    // prefixing the definite article (der/die/das) the way furigana surfaces reading for
+    // Japanese. Keyed off the client-sent language label since that's all this generic
+    // endpoint receives (no languageId).
+    private function getExtraLearnerRules(string $targetLanguage): string
+    {
+        if ($targetLanguage === 'German') {
+            return "\n- For nouns, prefix the word field with its definite article to show gender (\"der\", \"die\", or \"das\"), e.g. \"der Hund\", \"die Katze\", \"das Kind\". Do not add an article for verbs, adjectives, or other non-nouns.";
+        }
+        return '';
+    }
+
+    private function getExtraExample(string $targetLanguage): string
+    {
+        if ($targetLanguage === 'German') {
+            return <<<EOT
+
+
+Example noun with a gender article:
+{
+  "word": "der Hund",
+  "meaning": "dog",
+  "partOfSpeech": "noun",
+  "exampleSentence": "Der <b>Hund</b> läuft im Park.",
+  "exampleSentenceEnglish": "The dog runs in the park."
+}
+EOT;
+        }
+        return '';
+    }
+
     public function translateWord(Request $request)
     {
         try {
@@ -55,16 +86,13 @@ class AiTranslationController extends Controller
             $entitlementError = $this->checkEntitlement($deviceService, $device, $appUserId);
             if ($entitlementError) return $entitlementError;
 
-            $systemInstructions = str_replace(
-                '{{LANGUAGE}}',
-                $targetLanguage,
-                config('prompts.system_instructions_generic')
-            );
-            $singleWordInstructions = str_replace(
-                '{{LANGUAGE}}',
-                $targetLanguage,
-                config('prompts.single_word_instructions_generic')
-            );
+            $replacements = [
+                '{{LANGUAGE}}' => $targetLanguage,
+                '{{EXTRA_RULES}}' => $this->getExtraLearnerRules($targetLanguage),
+                '{{EXTRA_EXAMPLE}}' => $this->getExtraExample($targetLanguage),
+            ];
+            $systemInstructions = strtr(config('prompts.system_instructions_generic'), $replacements);
+            $singleWordInstructions = strtr(config('prompts.single_word_instructions_generic'), $replacements);
 
             $key = config('services.openai.key');
             $client = OpenAI::client($key);

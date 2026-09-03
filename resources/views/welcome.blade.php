@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- Pages --}}
-    <section class="max-w-[1400px] mx-auto">
+    <section class="max-w-[1150px] mx-auto">
         <section
             class="my-2 shadow-lg shadow-purple-800/50 border border-purple-500 p-6 mb-10 bg-purple-950 text-white  rounded">
             <h1 class="font-light tracking-[10px] text-2xl lg:text-4xl uppercase  border-b-[0.5px] mb-4 pb-2">Intro <span
@@ -90,7 +90,7 @@
                 <span class="lg:hidden text-xs lg:text-xl ">- お問い合わせ </span>
             </h1>
             <form class="lg:flex justify-evenly items-center" action="https://api.web3forms.com/submit" method="POST">
-                <div class="flex flex-col space-y-2 lg:w-1/2">
+                <div class="flex flex-col space-y-2 lg:w-full">
                     <input type="hidden" name="access_key" value="1dfd7f4d-6403-408e-ab68-b4d36126c2d7">
                     <div class="mb-4">
                         <label class="block" for="name">Name: </label>
@@ -113,10 +113,6 @@
 
                         <button class="bg-purple-600 p-2 px-4 cursor-pointer mt-2" type="submit">Submit</button>
                     </div>
-                </div>
-                <div class="lg:w-1/2 pt-6 lg:pt-2 flex justify-center">
-                    <img class="lg:w-1/2" src="{{ asset('images/UmeboshiChan.svg') }}" alt="Umeboshi Chan">
-
                 </div>
 
 

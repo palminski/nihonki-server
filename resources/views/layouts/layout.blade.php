@@ -17,6 +17,15 @@
 </head>
 
 <body class="min-h-screen bg-fixed bg-[linear-gradient(to_top,_#050505,_#220a2e,_#2c0042)] overflow-x-hidden">
+    {{-- Decorative mascots, pinned to the viewport (not the page) so they stay put in their
+    corners as you scroll. Negative z-index keeps them strictly behind normal-flow content
+    (the text cards), so they only show through in the empty space around/behind them
+    rather than covering anything. --}}
+    <img src="{{ asset('images/UmeboshiChan.svg') }}" alt="" aria-hidden="true"
+        class="hidden lg:block fixed bottom-0 right-0 w-[200px] xl:w-[260px] -z-10 pointer-events-none select-none">
+    <img src="{{ asset('images/UmeboshiChan.svg') }}" alt="" aria-hidden="true"
+        class="hidden lg:block fixed top-24 left-0 w-[200px] xl:w-[260px] rotate-180 -z-10 pointer-events-none select-none">
+
         @include('partials.navigation')
     @if (session('error-message'))
         <h3 style="color: red">{{ session('error-message') }}</h3>

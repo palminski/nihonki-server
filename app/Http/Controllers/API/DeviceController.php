@@ -30,7 +30,6 @@ class DeviceController extends Controller
             $device->images_remaining = 25;
             $device->save();
         }
-        $imagesRemaining = $device->images_remaining;
         $wordsRemaining = $device->words_remaining;
         $userSubscribed = true;
 
@@ -60,7 +59,6 @@ class DeviceController extends Controller
         }
 
         return response()->json([
-            'images_remaining' => $imagesRemaining,
             'words_remaining' => $wordsRemaining,
             'is_subscribed' => $userSubscribed,
         ]);

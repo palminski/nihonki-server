@@ -447,7 +447,7 @@ Required Output Fields:
 - The meaning field must be ONLY a short English translation/gloss of the word (e.g. "mother", "to run", "hello") — a few words at most. NEVER write a dictionary-style definition or explanation of the word, and NEVER write it in {{LANGUAGE}} — it must always be in English.
 - The exampleSentence must be written entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
 - Avoid vulgar/slang meanings unless explicitly requested.
-- Example sentences must be appropriate for general learners (no sexual or offensive content).
+- Example sentences must be appropriate for general learners (no sexual or offensive content).{{EXTRA_RULES}}
 
 ---
 
@@ -458,7 +458,7 @@ Example (illustrative shape only — always answer in {{LANGUAGE}}, not this exa
   "partOfSpeech": "verb",
   "exampleSentence": "Yo <b>corro</b> en el parque cada mañana.",
   "exampleSentenceEnglish": "I run in the park every morning."
-}
+}{{EXTRA_EXAMPLE}}
 EOT,
     /*
     |--------------------------------------------------------------------------
@@ -485,7 +485,7 @@ Rules:
 - Sentences must be original and show natural, real-world usage.
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - The meaning field must be ONLY a short English translation/gloss (e.g. "mother", "to run") — never a dictionary-style definition, and never written in {{LANGUAGE}}.
-- The exampleSentence must be entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
+- The exampleSentence must be entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.{{EXTRA_RULES}}
 EOT,
 
 /*
