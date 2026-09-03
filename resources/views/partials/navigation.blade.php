@@ -1,4 +1,4 @@
-<nav class=" z-50 p-4 bg-black border-b border-purple-800 " x-data="{ open: false }">
+<nav class="sticky top-0 z-50 p-4 bg-black border-b border-purple-800 " x-data="{ open: false }">
     <section class="hidden  lg:flex justify-between ml-[50px]">
         <a class="" href="/">
             {{-- @include('partials.morph_text') --}}
