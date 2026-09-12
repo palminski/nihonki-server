@@ -59,7 +59,8 @@ Example noun with a gender article:
   "meaning": "dog",
   "partOfSpeech": "noun",
   "exampleSentence": "Der <b>Hund</b> läuft im Park.",
-  "exampleSentenceEnglish": "The dog runs in the park."
+  "exampleSentenceEnglish": "The dog runs in the park.",
+  "notes": ""
 }
 EOT;
         }
@@ -97,8 +98,9 @@ EOT;
             $key = config('services.openai.key');
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
-                'model' => 'gpt-4o-mini',
-                'temperature' => 0.3,
+                'model' => 'gpt-5.6-luna',
+                'reasoning' => ['effort' => 'none'],
+                'temperature' => 0.6,
                 'input' => [
                     ["role" => "system", "content" => $systemInstructions],
                     ["role" => "system", "content" => $singleWordInstructions],
@@ -156,8 +158,9 @@ EOT;
             $key = config('services.openai.key');
             $client = OpenAI::client($key);
             $response = $client->responses()->create([
-                'model' => 'gpt-4o-mini',
-                'temperature' => 0.3,
+                'model' => 'gpt-5.6-luna',
+                'reasoning' => ['effort' => 'none'],
+                'temperature' => 0.6,
                 'input' => [
                     ["role" => "system", "content" => $systemInstructions],
                     ["role" => "system", "content" => $singleWordInstructions],
