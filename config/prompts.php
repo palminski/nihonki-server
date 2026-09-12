@@ -30,6 +30,7 @@ General Formatting Rules:
 Notes Field Rule:
 - "notes" is optional extra info not shown on the card face itself, surfaced separately in the app. Use it for anything a learner would find useful that doesn't fit the other fields.
 - Most importantly: if partOfSpeech is a verb, always include its key conjugated forms in notes (e.g. present, past, negative, te-form, and any other commonly needed forms).
+- List each conjugated form on its own line — separate lines with a newline character ("\\n"), never comma-separate multiple forms onto one line.
 - Leave notes as an empty string "" for words that don't need any of this — never fabricate content just to fill it in.
 
 ---
@@ -88,7 +89,7 @@ Examples:
   "exampleSentenceFurigana": " 毎朝[まいあさ] 公園[こうえん]で <b> 走[はし]る</b>。",
   "exampleSentenceKana": "まいあさこうえんで <b>はしる</b>。",
   "exampleSentenceEnglish": "I run in the park every morning.",
-  "notes": "Conjugations: present 走る (hashiru), negative 走らない (hashiranai), past 走った (hashitta), past negative 走らなかった (hashiranakatta), te-form 走って (hashitte), polite 走ります (hashirimasu)."
+  "notes": "Present: 走る (hashiru)\\nNegative: 走らない (hashiranai)\\nPast: 走った (hashitta)\\nPast negative: 走らなかった (hashiranakatta)\\nTe-form: 走って (hashitte)\\nPolite: 走ります (hashirimasu)"
 }
 
 {
@@ -101,7 +102,7 @@ Examples:
   "exampleSentenceFurigana": " 図書館[としょかん]で <b> 勉強[べんきょう]</b>しています。",
   "exampleSentenceKana": "としょかんで <b>べんきょう</b>しています。",
   "exampleSentenceEnglish": "I am studying at the library.",
-  "notes": "As a suru verb: 勉強する (benkyou suru), past 勉強した (benkyou shita), negative 勉強しない (benkyou shinai)."
+  "notes": "Suru verb: 勉強する (benkyou suru)\\nPast: 勉強した (benkyou shita)\\nNegative: 勉強しない (benkyou shinai)"
 }
 EOT,
     /*
@@ -132,7 +133,7 @@ Rules:
 - Sentences must be original and show natural, real-world usage.
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - Ensure proper <b> wrapping and furigana formatting.
-- notes is optional: if partOfSpeech is a verb, always include its key conjugated forms there (present, past, negative, te-form, etc.); otherwise leave it as an empty string "".
+- notes is optional: if partOfSpeech is a verb, always include its key conjugated forms there (present, past, negative, te-form, etc.), one per line separated by "\\n"; otherwise leave it as an empty string "".
 
 Example output format:
 {
@@ -145,7 +146,7 @@ Example output format:
   "exampleSentenceFurigana": " 毎朝[まいあさ] 公園[こうえん]で <b> 走[はし]る</b>。",
   "exampleSentenceKana": "まいあさこうえんで <b>はしる</b>。",
   "exampleSentenceEnglish": "I run in the park every morning.",
-  "notes": "Conjugations: present 走る (hashiru), negative 走らない (hashiranai), past 走った (hashitta), te-form 走って (hashitte), polite 走ります (hashirimasu)."
+  "notes": "Present: 走る (hashiru)\\nNegative: 走らない (hashiranai)\\nPast: 走った (hashitta)\\nTe-form: 走って (hashitte)\\nPolite: 走ります (hashirimasu)"
 }
 EOT,
     /*
@@ -180,7 +181,7 @@ Rules for extraction:
 - Do NOT use the text in the image itself as the example sentence unless it is a full, contextual sentence.
 - Example sentences must always provide meaningful context and natural usage (avoid single-word utterances or manga quotes).
 - If OCR confidence is low, make a best guess of the text before translation rather than returning nothing.
-- notes is optional: if partOfSpeech is a verb, include its key conjugated forms there; otherwise leave it as an empty string "".
+- notes is optional: if partOfSpeech is a verb, include its key conjugated forms there, one per line separated by "\\n"; otherwise leave it as an empty string "".
 
 Output format: [ {...}, {...}, {...} ]
 EOT,
@@ -465,7 +466,7 @@ Required Output Fields:
 - The exampleSentence must be written entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
 - Avoid vulgar/slang meanings unless explicitly requested.
 - Example sentences must be appropriate for general learners (no sexual or offensive content).
-- "notes" is optional extra info not shown on the card face, surfaced separately in the app. Most importantly: if partOfSpeech is a verb, always include its key conjugated forms in notes (e.g. present, past, and any other commonly needed forms for {{LANGUAGE}}). Leave notes as an empty string "" when there's nothing worth adding — never fabricate content just to fill it in.{{EXTRA_RULES}}
+- "notes" is optional extra info not shown on the card face, surfaced separately in the app. Most importantly: if partOfSpeech is a verb, always include its key conjugated forms in notes (e.g. present, past, and any other commonly needed forms for {{LANGUAGE}}), with each form on its own line separated by a newline character ("\\n") — never comma-separate them onto one line. Leave notes as an empty string "" when there's nothing worth adding — never fabricate content just to fill it in.{{EXTRA_RULES}}
 
 ---
 
@@ -476,7 +477,7 @@ Example (illustrative shape only — always answer in {{LANGUAGE}}, not this exa
   "partOfSpeech": "verb",
   "exampleSentence": "Yo <b>corro</b> en el parque cada mañana.",
   "exampleSentenceEnglish": "I run in the park every morning.",
-  "notes": "Conjugations (present): corro, corres, corre, corremos, corréis, corren."
+  "notes": "Present tense:\\nyo corro\\ntú corres\\nél/ella corre\\nnosotros corremos\\nvosotros corréis\\nellos corren"
 }{{EXTRA_EXAMPLE}}
 EOT,
     /*
@@ -506,7 +507,7 @@ Rules:
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - The meaning field must be ONLY a short English translation/gloss (e.g. "mother", "to run") — never a dictionary-style definition, and never written in {{LANGUAGE}}.
 - The exampleSentence must be entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
-- "notes" is optional: if partOfSpeech is a verb, always include its key conjugated forms there; otherwise leave it as an empty string "".{{EXTRA_RULES}}
+- "notes" is optional: if partOfSpeech is a verb, always include its key conjugated forms there, one per line separated by "\\n"; otherwise leave it as an empty string "".{{EXTRA_RULES}}
 EOT,
 
 /*
@@ -563,7 +564,7 @@ Required Output Fields:
 - The exampleSentencePronunciation must be the exact same sentence, character-for-character, with every character individually annotated with its romanization in brackets, and <b></b> wrapping the same target word or phrase (each bracketed character inside the wrapped span keeps its own brackets).
 - Avoid vulgar/slang meanings unless explicitly requested.
 - Example sentences must be appropriate for general learners (no sexual or offensive content).
-- "notes" is optional extra info not shown on the card face, surfaced separately in the app. If partOfSpeech is a verb, include any commonly useful conjugated/aspect forms for {{LANGUAGE}} (leave notes empty if the language doesn't inflect verbs). Leave notes as an empty string "" when there's nothing worth adding — never fabricate content just to fill it in.
+- "notes" is optional extra info not shown on the card face, surfaced separately in the app. If partOfSpeech is a verb, include any commonly useful conjugated/aspect forms for {{LANGUAGE}} (leave notes empty if the language doesn't inflect verbs), with each form on its own line separated by a newline character ("\\n") — never comma-separate them onto one line. Leave notes as an empty string "" when there's nothing worth adding — never fabricate content just to fill it in.
 
 ---
 
@@ -609,7 +610,7 @@ Rules:
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - The meaning field must be ONLY a short English translation/gloss (e.g. "mother", "hello") — never a dictionary-style definition, and never written in {{LANGUAGE}}.
 - The exampleSentence must contain no romanization at all; exampleSentencePronunciation must be the identical sentence with every character bracketed.
-- "notes" is optional: if partOfSpeech is a verb, include any commonly useful conjugated/aspect forms for {{LANGUAGE}} (leave empty if the language doesn't inflect verbs); otherwise leave it as an empty string "".
+- "notes" is optional: if partOfSpeech is a verb, include any commonly useful conjugated/aspect forms for {{LANGUAGE}} (leave empty if the language doesn't inflect verbs), one per line separated by "\\n"; otherwise leave it as an empty string "".
 EOT,
 
 
