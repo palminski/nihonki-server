@@ -22,8 +22,15 @@ General Formatting Rules:
 - Every kanji compound with furigana must be preceded by a half-width space.
   Example: " 私[わたし]は <b> 暗記[あんき]</b>します。"
 - Every exampleSentenceFurigana must include furigana for ALL kanji compounds.
-- Do not output any field containing null, empty strings, or placeholders.
+- Do not output any field containing null, empty strings, or placeholders — except "notes", which may be an empty string when there is nothing worth adding.
 - Do not include commentary, quotes, or explanations outside of JSON.
+
+---
+
+Notes Field Rule:
+- "notes" is optional extra info not shown on the card face itself, surfaced separately in the app. Use it for anything a learner would find useful that doesn't fit the other fields.
+- Most importantly: if partOfSpeech is a verb, always include its key conjugated forms in notes (e.g. present, past, negative, te-form, and any other commonly needed forms).
+- Leave notes as an empty string "" for words that don't need any of this — never fabricate content just to fill it in.
 
 ---
 
@@ -51,7 +58,8 @@ Required Output Fields:
   "exampleSentenceKanji": "...",
   "exampleSentenceFurigana": "...",
   "exampleSentenceKana": "...",
-  "exampleSentenceEnglish": "..."
+  "exampleSentenceEnglish": "...",
+  "notes": "..."
 }
 
 ---
@@ -66,7 +74,8 @@ Examples:
   "exampleSentenceKanji": "彼は <b>刀</b>を持っている。",
   "exampleSentenceFurigana": " 彼[かれ]は <b> 刀[かたな]</b>を 持[も]っている。",
   "exampleSentenceKana": "かれは <b>かたな</b>をもっている。",
-  "exampleSentenceEnglish": "He carries a sword."
+  "exampleSentenceEnglish": "He carries a sword.",
+  "notes": ""
 }
 
 {
@@ -78,7 +87,8 @@ Examples:
   "exampleSentenceKanji": "毎朝公園で <b>走る</b>。",
   "exampleSentenceFurigana": " 毎朝[まいあさ] 公園[こうえん]で <b> 走[はし]る</b>。",
   "exampleSentenceKana": "まいあさこうえんで <b>はしる</b>。",
-  "exampleSentenceEnglish": "I run in the park every morning."
+  "exampleSentenceEnglish": "I run in the park every morning.",
+  "notes": "Conjugations: present 走る (hashiru), negative 走らない (hashiranai), past 走った (hashitta), past negative 走らなかった (hashiranakatta), te-form 走って (hashitte), polite 走ります (hashirimasu)."
 }
 
 {
@@ -90,7 +100,8 @@ Examples:
   "exampleSentenceKanji": "図書館で <b>勉強</b>しています。",
   "exampleSentenceFurigana": " 図書館[としょかん]で <b> 勉強[べんきょう]</b>しています。",
   "exampleSentenceKana": "としょかんで <b>べんきょう</b>しています。",
-  "exampleSentenceEnglish": "I am studying at the library."
+  "exampleSentenceEnglish": "I am studying at the library.",
+  "notes": "As a suru verb: 勉強する (benkyou suru), past 勉強した (benkyou shita), negative 勉強しない (benkyou shinai)."
 }
 EOT,
     /*
@@ -113,6 +124,7 @@ Return ONLY one valid JSON object with the following fields:
 - exampleSentenceFurigana
 - exampleSentenceKana
 - exampleSentenceEnglish
+- notes (optional — see rule below)
 
 Rules:
 - If the provided word is slang, casual, or affectionate (e.g. ワンコ, おにいちゃん, バカっぽい), DO NOT replace it with a more standard or dictionary form.
@@ -120,6 +132,7 @@ Rules:
 - Sentences must be original and show natural, real-world usage.
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - Ensure proper <b> wrapping and furigana formatting.
+- notes is optional: if partOfSpeech is a verb, always include its key conjugated forms there (present, past, negative, te-form, etc.); otherwise leave it as an empty string "".
 
 Example output format:
 {
@@ -131,7 +144,8 @@ Example output format:
   "exampleSentenceKanji": "毎朝公園で <b>走る</b>。",
   "exampleSentenceFurigana": " 毎朝[まいあさ] 公園[こうえん]で <b> 走[はし]る</b>。",
   "exampleSentenceKana": "まいあさこうえんで <b>はしる</b>。",
-  "exampleSentenceEnglish": "I run in the park every morning."
+  "exampleSentenceEnglish": "I run in the park every morning.",
+  "notes": "Conjugations: present 走る (hashiru), negative 走らない (hashiranai), past 走った (hashitta), te-form 走って (hashitte), polite 走ります (hashirimasu)."
 }
 EOT,
     /*
@@ -154,6 +168,7 @@ Each object must include:
 - exampleSentenceFurigana
 - exampleSentenceKana
 - exampleSentenceEnglish
+- notes (optional — see rule below)
 
 ---
 
@@ -165,6 +180,7 @@ Rules for extraction:
 - Do NOT use the text in the image itself as the example sentence unless it is a full, contextual sentence.
 - Example sentences must always provide meaningful context and natural usage (avoid single-word utterances or manga quotes).
 - If OCR confidence is low, make a best guess of the text before translation rather than returning nothing.
+- notes is optional: if partOfSpeech is a verb, include its key conjugated forms there; otherwise leave it as an empty string "".
 
 Output format: [ {...}, {...}, {...} ]
 EOT,
@@ -425,7 +441,7 @@ All fields and rules below are mandatory.
 General Formatting Rules:
 - Use only <b></b> for bold. Do NOT use <strong>, <em>, or any other HTML tags.
 - Every example sentence must be useful. This means not overly complicated, but also not overly simple and generic.
-- Do not output any field containing null, empty strings, or placeholders.
+- Do not output any field containing null, empty strings, or placeholders — except "notes", which may be an empty string when there is nothing worth adding.
 - Do not include commentary, quotes, or explanations outside of JSON.
 
 ---
@@ -436,7 +452,8 @@ Required Output Fields:
   "meaning": "...",
   "partOfSpeech": "...",
   "exampleSentence": "...",
-  "exampleSentenceEnglish": "..."
+  "exampleSentenceEnglish": "...",
+  "notes": "..."
 }
 
 ---
@@ -447,7 +464,8 @@ Required Output Fields:
 - The meaning field must be ONLY a short English translation/gloss of the word (e.g. "mother", "to run", "hello") — a few words at most. NEVER write a dictionary-style definition or explanation of the word, and NEVER write it in {{LANGUAGE}} — it must always be in English.
 - The exampleSentence must be written entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
 - Avoid vulgar/slang meanings unless explicitly requested.
-- Example sentences must be appropriate for general learners (no sexual or offensive content).{{EXTRA_RULES}}
+- Example sentences must be appropriate for general learners (no sexual or offensive content).
+- "notes" is optional extra info not shown on the card face, surfaced separately in the app. Most importantly: if partOfSpeech is a verb, always include its key conjugated forms in notes (e.g. present, past, and any other commonly needed forms for {{LANGUAGE}}). Leave notes as an empty string "" when there's nothing worth adding — never fabricate content just to fill it in.{{EXTRA_RULES}}
 
 ---
 
@@ -457,7 +475,8 @@ Example (illustrative shape only — always answer in {{LANGUAGE}}, not this exa
   "meaning": "to run",
   "partOfSpeech": "verb",
   "exampleSentence": "Yo <b>corro</b> en el parque cada mañana.",
-  "exampleSentenceEnglish": "I run in the park every morning."
+  "exampleSentenceEnglish": "I run in the park every morning.",
+  "notes": "Conjugations (present): corro, corres, corre, corremos, corréis, corren."
 }{{EXTRA_EXAMPLE}}
 EOT,
     /*
@@ -476,7 +495,8 @@ Return ONLY one valid JSON object with the following fields:
   "meaning": "...",
   "partOfSpeech": "...",
   "exampleSentence": "...",
-  "exampleSentenceEnglish": "..."
+  "exampleSentenceEnglish": "...",
+  "notes": "..."
 }
 
 Rules:
@@ -485,7 +505,8 @@ Rules:
 - Sentences must be original and show natural, real-world usage.
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - The meaning field must be ONLY a short English translation/gloss (e.g. "mother", "to run") — never a dictionary-style definition, and never written in {{LANGUAGE}}.
-- The exampleSentence must be entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.{{EXTRA_RULES}}
+- The exampleSentence must be entirely in {{LANGUAGE}}, with <b></b> wrapping only the target word or phrase.
+- "notes" is optional: if partOfSpeech is a verb, always include its key conjugated forms there; otherwise leave it as an empty string "".{{EXTRA_RULES}}
 EOT,
 
 /*
@@ -514,7 +535,7 @@ General Formatting Rules:
 - Every single character must have its own bracketed romanization — do not group multiple characters under one bracket.
 - Every "pronunciation" and "exampleSentencePronunciation" field must include romanization for every character with no exceptions.
 - The "exampleSentence" field itself must contain no romanization, brackets, or pronunciation hints — plain script only.
-- Do not output any field containing null, empty strings, or placeholders.
+- Do not output any field containing null, empty strings, or placeholders — except "notes", which may be an empty string when there is nothing worth adding.
 - Do not include commentary, quotes, or explanations outside of JSON.
 
 ---
@@ -527,7 +548,8 @@ Required Output Fields:
   "partOfSpeech": "...",
   "exampleSentence": "...",
   "exampleSentencePronunciation": "...",
-  "exampleSentenceEnglish": "..."
+  "exampleSentenceEnglish": "...",
+  "notes": "..."
 }
 
 ---
@@ -541,6 +563,7 @@ Required Output Fields:
 - The exampleSentencePronunciation must be the exact same sentence, character-for-character, with every character individually annotated with its romanization in brackets, and <b></b> wrapping the same target word or phrase (each bracketed character inside the wrapped span keeps its own brackets).
 - Avoid vulgar/slang meanings unless explicitly requested.
 - Example sentences must be appropriate for general learners (no sexual or offensive content).
+- "notes" is optional extra info not shown on the card face, surfaced separately in the app. If partOfSpeech is a verb, include any commonly useful conjugated/aspect forms for {{LANGUAGE}} (leave notes empty if the language doesn't inflect verbs). Leave notes as an empty string "" when there's nothing worth adding — never fabricate content just to fill it in.
 
 ---
 
@@ -552,7 +575,8 @@ Example (illustrative shape only — always answer in {{LANGUAGE}} using {{ROMAN
   "partOfSpeech": "greeting",
   "exampleSentence": "他每天早上说 <b>你好</b>。",
   "exampleSentencePronunciation": "他[tā]每[měi]天[tiān]早[zǎo]上[shàng]说[shuō] <b>你[nǐ]好[hǎo]</b>。",
-  "exampleSentenceEnglish": "He says hello every morning."
+  "exampleSentenceEnglish": "He says hello every morning.",
+  "notes": ""
 }
 EOT,
     /*
@@ -573,7 +597,8 @@ Return ONLY one valid JSON object with the following fields:
   "partOfSpeech": "...",
   "exampleSentence": "...",
   "exampleSentencePronunciation": "...",
-  "exampleSentenceEnglish": "..."
+  "exampleSentenceEnglish": "...",
+  "notes": "..."
 }
 
 Rules:
@@ -584,6 +609,7 @@ Rules:
 - Do not repeat the word alone or use dictionary-style definitions as examples.
 - The meaning field must be ONLY a short English translation/gloss (e.g. "mother", "hello") — never a dictionary-style definition, and never written in {{LANGUAGE}}.
 - The exampleSentence must contain no romanization at all; exampleSentencePronunciation must be the identical sentence with every character bracketed.
+- "notes" is optional: if partOfSpeech is a verb, include any commonly useful conjugated/aspect forms for {{LANGUAGE}} (leave empty if the language doesn't inflect verbs); otherwise leave it as an empty string "".
 EOT,
 
 
